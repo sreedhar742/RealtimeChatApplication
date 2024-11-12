@@ -34,7 +34,6 @@ CSRF_TRUSTED_ORIGINS = [ 'https://*' ]
 
 INSTALLED_APPS = [
     'daphne',
-    'channels',
     'a_rtchat',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -90,12 +89,28 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'a_core.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
+# CHANNEL_LAYERS={
+#     'default':{
+#         'BACKEND':'channels.layer.InMemoryChannelLayer',
+#     }
+# }
 
+# CHANNEL_LAYERS={
+#     'default':{
+#         'BACKEND':'channel_redis.core.RedisChannelLayer',
+#         'CONFIG':{
+#             'hosts':[('127.0.0.1'),6379],
+#         },
+#     },
+# }
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
